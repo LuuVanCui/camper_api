@@ -4,6 +4,7 @@ const Course = require("../models/Course");
 const ErrorResponse = require("../untils/errorResponse");
 
 // @desc    Get all courses
+// @route   GET /api/v1/courses
 // @route   GET /api/v1/bootcamps/:bootcampId/courses
 // @access  public
 exports.getCourses = asyncHandler(async (req, res, next) => {
