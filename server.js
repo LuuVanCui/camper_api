@@ -29,6 +29,9 @@ const reviews = require("./routes/reviews");
 
 const app = express();
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 // Body parser
 app.use(express.json());
 
@@ -44,13 +47,13 @@ if (process.env.NODE_ENV === "development") {
 app.use(fileupload());
 
 // Sanitize data
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 // Set security header
-app.use(helmet());
+// app.use(helmet());
 
 // Prevent XSS attack
-app.use(xss());
+// app.use(xss());
 
 // Rate limitting
 const limiter = rateLimit({
@@ -67,6 +70,11 @@ app.use(cors());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")));
+
+// View login
+app.get('/login', function(req, res) {
+  res.render('pages/login');
+});
 
 // Mount routes
 app.use("/api/v1/bootcamps", bootcamps);
