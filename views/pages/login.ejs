@@ -36,7 +36,6 @@
       <button type="submit" class="btn btn-primary mt-2">Submit</button>
     </form>
     <p class="text-success noti" id="message"></p>
-    <p class="text-primary noti" id="token"></p>
   </main>
 
   <script>
@@ -44,12 +43,11 @@
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const message = document.getElementById('message');
-    const token = document.getElementById('token');
-    const hiddens = document.querySelectorAll('.noti');
+    const hidden = document.querySelector('.noti');
 
     form.onsubmit = function (e) {
       e.preventDefault();
-      hiddens.forEach(item => item.classList.add('hidden'))
+      hidden.classList.add('hidden')
       fetch('/api/v1/auth/login', {
         method: 'post',
         headers: {
@@ -60,21 +58,18 @@
           password: password.value
         })
       }).then(res => res.json()).then(data => {
-        const { token: accessToken } = data;
 
         const { success } = data;
         if (success) {
           message.innerText = 'Đăng nhập thành công';
-          token.innerText = `Access token: ${accessToken}`;
-          hiddens.forEach(item => item.classList.add('show'))
-          hiddens.forEach(item => item.classList.remove('hidden'))
+          hidden.classList.add('show')
+          hidden.classList.remove('hidden')
         }
         else {
-          token.innerText = '';
           const { error } = data;
           message.innerText = error;
-          hiddens.forEach(item => item.classList.add('show'))
-          hiddens.forEach(item => item.classList.remove('hidden'))
+          hidden.classList.add('show')
+          hidden.classList.remove('hidden')
         }
 
       }).catch(err => alert(err.message))
